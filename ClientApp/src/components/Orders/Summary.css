@@ -1,0 +1,21 @@
+.category {
+    font-size: 24px;
+    font-weight: bold;
+    color: dimgray;
+}
+
+.item-name {
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.item-amount {
+    margin-top: 5px;
+    font-size: 18px;
+    text-align: right;
+}
+
+.operation {
+    margin-top: 10px;
+    margin-left: 10px;
+}

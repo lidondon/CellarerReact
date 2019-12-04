@@ -1,0 +1,23 @@
+.operations {
+    font-size: 24px;
+    padding-bottom: 10px;
+}
+
+.operations .delete {
+    color: orangered;
+}
+
+.operations .add {
+    margin-left: 10px;
+    color: green;
+}
+
+.operations .save {
+    margin-left: 10px;
+    color: dodgerblue;
+}
+
+.operations .disable {
+    color: lightgray;
+    pointer-events: none;
+}
