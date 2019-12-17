@@ -68,6 +68,7 @@ class EditableTable extends React.Component {
                         categoryId: this.props.categoryId,
                         record,
                         editable: col.editable,
+                        type: col.type,
                         dataIndex: col.dataIndex,
                         title: col.title,
                         required: col.required,
@@ -138,13 +139,23 @@ class EditableCell extends React.Component {
         let result = true;
 
         for (let k in values) {
-            if (record[k] !== values[k]) {
+            if (!values[k] || record[k] !== values[k]) {
                 result = false;
                 break;
             }
         }
 
         return result;
+    }
+
+    validateInteger = (rule, value, callback) => {
+        const { type } = this.props;
+
+        if (value && type === "integer" && parseInt(value) != value) {
+            callback("Integer only");
+        } else {
+            callback();
+        }
     }
 
     renderCell = form => {
@@ -157,9 +168,13 @@ class EditableCell extends React.Component {
                 {form.getFieldDecorator(dataIndex, {
                     rules: [
                         {
-                            required,
+                            required: true,
                             message: "required",
                         },
+                        {
+                            validator: this.validateInteger,
+                            message: "Integer only"
+                        }
                     ],
                     initialValue: record[dataIndex],
                 })(<Input autoFocus={required} className="input" ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
@@ -186,6 +201,7 @@ class EditableCell extends React.Component {
             index,
             handleSave,
             children,
+            type,
             ...restProps
         } = this.props;
 
@@ -198,7 +214,8 @@ class EditableCell extends React.Component {
 }
 
 EditableCell.defaultProps = {
-    required: false
+    required: false,
+    type: "string"
 }
 
 

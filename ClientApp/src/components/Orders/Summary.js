@@ -99,7 +99,7 @@ const Operation = props => {
         <Row>
             { status === STATUSES.SUBMIT && <button type="button" className="btn btn-success operation" onClick={accept} >{ACCEPT}</button> }
             { status === STATUSES.SUBMIT && <button type="button" className="btn btn-danger operation" onClick={reject}>{CANCEL}</button> }
-            { status !== STATUSES.SUBMIT && <button type="button" className="btn btn-info operation" onClick={onClickSales}>{SALES}</button> }
+            { status === STATUSES.ACCEPT && <button type="button" className="btn btn-info operation" onClick={onClickSales}>{SALES}</button> }
         </Row>
     );
 }

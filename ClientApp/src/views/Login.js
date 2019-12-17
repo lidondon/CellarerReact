@@ -5,19 +5,23 @@ import { withRouter } from "react-router-dom";
 import { Modal } from 'antd';
 
 import { isLogin } from '../utilities/authentication';
+import { isCommonString } from '../utilities/util';
 import BaseView from './BaseView';
 import IconInput from '../components/Shared/IconInput';
 import * as actions from './LoginRedux';
 
 const USER_LOGIN = "用戶登入";
 const INPUT_ACCOUNT_PASSWORD = "請輸入帳號密碼";
+const INPUT_TYPE_ERROR = "帳號密碼格式錯誤";
 
 class Login extends BaseView {
     constructor(props) {
         super(props);
         this.state = {
             account: "",
-            password: ""
+            password: "",
+            isAccountError: false,
+            isPasswordError: false
         }
     }
 
@@ -35,19 +39,31 @@ class Login extends BaseView {
     }
 
     handleAccountChanged = e => {
-        this.setState({ account: e.target.value });
+        let account = e.target.value;
+        
+        this.setState({ 
+            account,
+            isAccountError: account ? !isCommonString(account) : false
+        });
     }
 
     handlePasswordChanged = e => {
-        this.setState({ password: e.target.value });
+        let password = e.target.value;
+
+        this.setState({ 
+            password,
+            isPasswordError: password ? !isCommonString(password) : false
+        });
     }
 
     handleLogin = () => {
         const { actions } = this.props;
-        const { account, password } = this.state;
+        const { account, password, isAccountError, isPasswordError } = this.state;
         
         if (!account || !password) {
             Modal.warning({ title: INPUT_ACCOUNT_PASSWORD });
+        } else if (isAccountError || isPasswordError) {
+            Modal.warning({ title: INPUT_TYPE_ERROR });
         } else {
             actions.login(this.state.account, this.state.password);
         }
@@ -61,7 +77,9 @@ class Login extends BaseView {
                     <div className="col-md-4">
                         <LoginBlock handleAccountChanged={this.handleAccountChanged} 
                             handlePasswordChanged={this.handlePasswordChanged}
-                            login={this.handleLogin}/>
+                            login={this.handleLogin}
+                            isAccountError={this.state.isAccountError}
+                            isPasswordError={this.state.isPasswordError}/>
                     </div>
                 </div>
             </div>
@@ -71,15 +89,15 @@ class Login extends BaseView {
 }
 
 const LoginBlock = props => {
-    const { handleAccountChanged, handlePasswordChanged } = props;
+    const { handleAccountChanged, handlePasswordChanged, isAccountError, isPasswordError } = props;
     
     return (
         <div className="card">
             <article className="card-body">
                 <h4 className="card-title text-center mb-4 mt-1">{USER_LOGIN}</h4>
                 <hr />
-                <IconInput icon="fa fa-user" placeHolder="Email or Account" type="email" onChange={handleAccountChanged} />
-                <IconInput icon="fa fa-lock" placeHolder="******" type="password" onChange={handlePasswordChanged} />
+                <IconInput icon="fa fa-user" placeHolder="Email or Account" type="email" onChange={handleAccountChanged} isError={isAccountError} />
+                <IconInput icon="fa fa-lock" placeHolder="******" type="password" onChange={handlePasswordChanged} isError={isPasswordError}/>
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary btn-block" onClick={props.login}> Login  </button>
                 </div>

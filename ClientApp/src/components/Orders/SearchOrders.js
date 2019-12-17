@@ -18,7 +18,7 @@ class SearchOrders extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dateRange: [moment().subtract(1, "months"), moment().add(1, "days")],
+            dateRange: [moment().subtract(7, "days"), moment()],
             currentStatus: null,
             filteredOrders: null
         };
@@ -33,10 +33,6 @@ class SearchOrders extends Component {
         let filteredOrders = orders;
         let filterChanged = false;
 
-        if (this.state.dateRange != nextState.dateRange || nextProps.searchOrdersR.refreshOrders) {
-            this.getOrders();
-        }
-
         if (this.state.currentStatus !== nextState.currentStatus) {
             filterChanged = true;
             filteredOrders = filteredOrders.filter(o => nextState.currentStatus ? o.orderStatus === nextState.currentStatus : true);
@@ -45,11 +41,17 @@ class SearchOrders extends Component {
         if (filterChanged || this.props.searchOrdersR.orders !== orders) this.setState({ filteredOrders });
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.dateRange != prevState.dateRange || this.props.searchOrdersR.refreshOrders) {
+            this.getOrders();
+        }
+    }
+
     getOrders = () => {
         const { searchOrdersActions } = this.props;
         const { dateRange } = this.state;
-        const startDate = dateRange[0].format(DATE_STRING_FORMAT);
-        const endDate = dateRange[1].format(DATE_STRING_FORMAT);
+        const startDate = (dateRange[0]) ? dateRange[0].format(DATE_STRING_FORMAT) : "2000-01-01";
+        const endDate = (dateRange[1]) ? dateRange[1].format(DATE_STRING_FORMAT) : "9999-12-31";
 
         searchOrdersActions.getOrders(startDate, endDate);
     }
@@ -68,7 +70,7 @@ class SearchOrders extends Component {
     }
 
     rangeOnChange = (dates, dateStrings) => {
-        this.setState({ dateRange: [ dates[0], dates[1].add(1, "days") ] });
+        this.setState({ dateRange: [ dates[0], dates[1] ] });
     }
     
     render() {

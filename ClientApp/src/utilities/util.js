@@ -52,3 +52,21 @@ export const datetimeString2DateString = s => {
 
     return result;
 }
+
+export const getDistinctField = (objs, field) => {
+    const result = [];
+
+    objs.forEach(o => {
+        if (!result.find(r => r === o[field])) result.push(o[field]);
+    });
+
+    return result;
+}
+
+export const isCommonString = s => {
+    return /^[\w!@#$%^&*.]+$/.test(s);
+}
+
+export const isInt = s => {
+    return /^\d+$/.test(s);
+}

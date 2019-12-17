@@ -22,3 +22,11 @@
     margin-bottom: 10px;
     margin-left: 10px;
 }
+
+.reason {
+    color: red;
+}
+
+.reason span {
+    margin-left: 5px;
+}

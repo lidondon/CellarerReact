@@ -24,6 +24,7 @@ class OrderDetail extends Component {
                     <span className="date">{datetimeString2DateString(row.submitDateTime)}</span>
                     <Tag className="status" color={STATUS_COLORS[row.orderStatus]}>{row.orderStatus}</Tag>
                 </Row>
+                <RejectReason reason={row.rejectReason} />
                 <Row>
                     <Col span={16} className="items">
                         <Order items={items} />
@@ -34,6 +35,19 @@ class OrderDetail extends Component {
                 </Row>
             </div>
         );
+    }
+}
+
+const RejectReason = props => {
+    if (props.reason) {
+        return (
+            <Row className="reason">
+                <i className="fas fa-exclamation-circle"></i>
+                <span>{props.reason}</span>
+            </Row>
+        );
+    } else {
+        return null;
     }
 }
 

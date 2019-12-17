@@ -13,7 +13,7 @@ class Home extends Component {
         return (
             <div className="container">
                 <Carousel autoplay >
-                    {pictures.map(p => <img src={p} alt="picture" />)}
+                    {pictures.map((p, i) => <img src={p} alt="picture" key={i} />)}
                 </Carousel>
             </div>
             

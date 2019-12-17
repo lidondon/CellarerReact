@@ -17,9 +17,9 @@ const CLEAR_ORDER_INFO = "CLEAR_ORDER_INFO";
 const LOADING = "LOADING";
 const SUCCESS = "SUCCESS";
 const ERROR = "ERROR";
-const UNLIMITED = "UNLIMITED";
+//const UNLIMITED = "UNLIMITED";
 const INT_2_STRING_PROPS = ["id", "orderStatusId", "liquorId"];
-const STRING_2_INT_PROPS = ["id", "orderStatusId", "quantity"];
+//const STRING_2_INT_PROPS = ["id", "orderStatusId", "quantity"];
 
 
 const initialState = {
@@ -48,6 +48,7 @@ export const clearOrderInfo = () => {
 }
 
 export const getOrders = (startDate, endDate) => {
+    console.log(GET_ORDERS_URL(startDate, endDate))
     return {
         type: GET_ORDERS,
         statuses: [ LOADING, SUCCESS, ERROR ],
@@ -95,12 +96,13 @@ export const acceptOrder = id => {
     };
 }
 
-export const rejectOrder = id => {
+export const rejectOrder = (id, reason) => {
     return {
         type: REJECT_ORDER,
         statuses: [ LOADING, SUCCESS, ERROR ],
         url: REJECT_ORDER_URL(id),
-        method: "post"
+        method: "post",
+        params: { reason }
     };
 }
 

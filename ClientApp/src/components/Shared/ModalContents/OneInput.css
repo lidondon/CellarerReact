@@ -1,0 +1,25 @@
+.modal {
+    padding: 32px, 32px, 24px
+}
+
+.icon {
+    color: lightsalmon;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.message {
+    color: black;
+}
+
+.operation {
+    margin-left: 10px;
+}
+
+.row-reason {
+    width: 95%;
+}
+
+.reason {
+    margin: 10px;
+}

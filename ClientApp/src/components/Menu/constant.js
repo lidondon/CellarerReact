@@ -19,7 +19,8 @@ export const ITEM_COLUMNS = [
         dataIndex: "price",
         width: "10%",
         editable: true,
-        required: true
+        required: true,
+        type: "integer"
     },
     {
         title: "描述",

@@ -7,6 +7,7 @@ const LOGIN = "LOGIN";
 const LOADING = "LOADING";
 const SUCCESS = "SUCCESS";
 const ERROR = "ERROR";
+const CELLARER = "CELLARER";
 
 const initialState = {
     isLoading: false,
@@ -22,7 +23,8 @@ export function login(email, password) {
         url: LOGIN_URL,
         params: {
             email,
-            password
+            password,
+            endpoint: CELLARER
         }
     };
 }

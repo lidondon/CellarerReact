@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Tag, Modal } from 'antd';
+import { Table, Row, Col, Tag, Modal, Icon, Button } from 'antd';
 
 import './OrderList.css';
+//import { getDistinctField } from '../../utilities/util';
 import OrderDetail from './OrderDetail';
+import OneInput from '../Shared/ModalContents/OneInput';
 
 export const STATUS_COLORS = {
     "SUBMIT": "green",
@@ -32,7 +34,9 @@ const COLUMNS = [
     {
         title: "酒吧",
         dataIndex: "consumerName",
-        width: "30%"
+        width: "30%",
+        sorter: (a, b) => a.consumerName.localeCompare(b.consumerName),
+        sortDirections: ["ascend", "descend"]
     },
     {
         title: "狀態",
@@ -43,7 +47,9 @@ const COLUMNS = [
     {
         title: "送出時間",
         dataIndex: "submitDateTime",
-        width: "25%"
+        width: "25%",
+        sorter: (a, b) => new Date(a.submitDateTime) - new Date(b.submitDateTime),
+        sortDirections: ["ascend", "descend"]
     }
 ];
 
@@ -53,6 +59,7 @@ class OrderList extends Component {
         this.state = {
             row: {},
             showModal: false,
+            showRejectConfirm: false,
             selectedRowKeys: []
         };
     }
@@ -94,23 +101,20 @@ class OrderList extends Component {
     }
 
     reject = () => {
-        const { row } = this.state;
-        const { rejectOrder } = this.props.searchOrdersActions;
-        
-        this.confirmOrderOperationModel(REJECT_CONFIRM, () => {
-            rejectOrder(row.id);
-            this.onCancelModal();
-        });
+        this.setState({ showRejectConfirm: true });
     }
 
-    confirmOrderOperationModel = (title, onOk) => {
-        confirm({
-            title,
-            okText: OK,
-            okType: "danger",
-            cancelText: CANCEL,
-            onOk
-        });
+    rejectConfirmOk = reason => {
+        const { row } = this.state;
+        const { rejectOrder } = this.props.searchOrdersActions;
+
+        rejectOrder(row.id, reason);
+        this.onCancelModal();
+        this.setState({ showRejectConfirm: false });
+    }
+
+    rejectConfirmCancel = () => {
+        this.setState({ showRejectConfirm: false });
     }
 
     getModalContent = () => {
@@ -124,14 +128,18 @@ class OrderList extends Component {
     render() {
         //const {} = this.state;
         const { orders } = this.props;
-        const { showModal } = this.state;
+        const { showModal, showRejectConfirm } = this.state;
 
         return (
             <div>
-                <Table showHeader={false} columns={COLUMNS} className="orderList"
+                <Table columns={COLUMNS} className="orderList"
                     dataSource={orders} rowKey="id" pagination={false} onRow={this.onRow} /> 
-                <Modal width="80%" visible={showModal} onCancel={this.onCancelModal} footer={null}>
+                <Modal width="80%" visible={showModal} onCancel={this.onCancelModal} footer={null} >
                     {this.getModalContent()}
+                </Modal>
+                <Modal width="400px" visible={showRejectConfirm} onCancel={this.onCancelModal} footer={null}
+                    closable={false} maskClosable={false}>
+                    <OneInput message={REJECT_CONFIRM} onOk={this.rejectConfirmOk} onCancel={this.rejectConfirmCancel}/>
                 </Modal>
             </div>
         );
