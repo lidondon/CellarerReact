@@ -24,12 +24,14 @@ class OneInput extends Component {
     onOk = () => {
         const { reason } = this.state;
         
-        if (reason) {
-            this.setState({ reason: null });
-            this.props.onOk(reason);
-        } else {
-            Modal.warning({ title: WARNING });
-        }
+        // if (reason) {
+        //     this.setState({ reason: null });
+        //     this.props.onOk(reason);
+        // } else {
+        //     Modal.warning({ title: WARNING });
+        // }
+        this.setState({ reason: null });
+        this.props.onOk(reason);
     }
 
     onCancel = () => {
@@ -48,7 +50,7 @@ class OneInput extends Component {
                     <i className="far fa-question-circle icon"></i>
                     <span className="message">{message}</span>
                 </Row>
-                <Row className="reason">
+                <Row className="reason-row">
                     <TextArea row={2} onChange={this.reasonOnChange} value={reason} />
                 </Row>
                 <Row>

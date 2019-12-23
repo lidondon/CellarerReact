@@ -9,3 +9,18 @@ span {
 .hello {
     color: brown;
 }
+
+.menu-item {
+    font-size: 20px;
+}
+
+.menu-item:hover {
+    color: grey;
+    font-weight: bolder;
+}
+
+.menu-item-selected {
+    color: grey;
+    font-weight: bolder;
+    text-shadow: 1px 1px white, -1px -1px #444
+}

@@ -3,3 +3,8 @@ export const STATUSES = {
     ACCEPT: "ACCEPT",
     REJECT: "REJECT",
 }
+
+export const PACKAGE = {
+    CANNED: "罐裝",
+    BOTTLED: "瓶裝"
+}

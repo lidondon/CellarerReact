@@ -22,9 +22,13 @@ class OrderDetail extends Component {
                 <Row>
                     <span className="title">{row.consumerName}</span>
                     <span className="date">{datetimeString2DateString(row.submitDateTime)}</span>
-                    <Tag className="status" color={STATUS_COLORS[row.orderStatus]}>{row.orderStatus}</Tag>
                 </Row>
-                <RejectReason reason={row.rejectReason} />
+                <Row>
+                    <Col span={1}>
+                        <Tag className="status" color={STATUS_COLORS[row.orderStatus]}>{row.orderStatus}</Tag>
+                    </Col>
+                    <RejectReason reason={row.rejectReason} />
+                </Row>
                 <Row>
                     <Col span={16} className="items">
                         <Order items={items} />
@@ -41,10 +45,10 @@ class OrderDetail extends Component {
 const RejectReason = props => {
     if (props.reason) {
         return (
-            <Row className="reason">
+            <Col className="reason" span={22} offset={1}>
                 <i className="fas fa-exclamation-circle"></i>
                 <span>{props.reason}</span>
-            </Row>
+            </Col>
         );
     } else {
         return null;

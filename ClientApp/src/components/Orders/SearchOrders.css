@@ -5,3 +5,11 @@
 .filter {
     margin-top: 10px;
 }
+
+.search-type {
+    width: 100px;
+}
+
+.search-input {
+    width: "200px";
+}

@@ -23,8 +23,16 @@ class Frame extends Component {
     }
 
     getMenu = () => {
-        return isLogin() ? <HaveLogin onLogout={this.onLogoutClick} /> : 
+        return isLogin() ? <HaveLogin onLogout={this.onLogoutClick} isSelected={this.isSelected} /> : 
             <Row><Col offset={22}><Button onClick={this.onLoginClick}>{LOGIN}</Button></Col></Row>;
+    }
+
+    isSelected = (path, isBlur = false) => {
+        if (isBlur) {
+            return (this.props.location.pathname.indexOf(path) >= 0) ? "menu-item-selected" : "";
+        } else {
+            return (path === this.props.location.pathname) ? "menu-item-selected" : "";
+        }
     }
 
     render () {
@@ -46,19 +54,27 @@ class Frame extends Component {
 }
 
 const HaveLogin = props => {
+    const { isSelected } = props;
+
     return (
         <Row>
             <Col span={16}>
                 <div className="navbar-collapse collapse ">
                     <ul className="navbar-nav flex-grow-1">
                         <li className="nav-item">
-                            <Link className="nav-link text-dark" to="/menus">酒單</Link>
+                            <Link className="nav-link text-dark" to="/menus">
+                                <span className={`menu-item ${isSelected("/menu", true)}`}>酒單</span>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-dark" to="/orders">訂單</Link>
+                            <Link className="nav-link text-dark" to="/orders">
+                                <span className={`menu-item ${isSelected("/orders")}`}>訂單</span>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-dark" to="/monthlysumreport">報表</Link>
+                            <Link className="nav-link text-dark" to="/monthlysumreport">
+                                <span className={`menu-item ${isSelected("/monthlysumreport")}`}>報表</span>
+                            </Link>
                         </li>
                     </ul>
                 </div>

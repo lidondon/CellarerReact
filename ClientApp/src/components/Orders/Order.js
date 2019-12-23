@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
 
+import { PACKAGE } from '../../constants/order';
+
 const COLUMNS = [
     {
         title: "名稱",
@@ -15,7 +17,8 @@ const COLUMNS = [
     {
         title: "包裝",
         dataIndex: "liquorBottling",
-        width: "20%"
+        width: "20%",
+        render: text => PACKAGE[text]
     },
     {
         title: "金額",

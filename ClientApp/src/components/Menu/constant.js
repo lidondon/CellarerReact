@@ -1,3 +1,5 @@
+import { PACKAGE } from '../../constants/order';
+
 export const ITEM_COLUMNS = [
     {
         title: "名稱",
@@ -12,7 +14,8 @@ export const ITEM_COLUMNS = [
     {
         title: "包裝",
         dataIndex: "liquorBottling",
-        width: "15%"
+        width: "15%",
+        render: text => PACKAGE[text]
     },
     {
         title: "金額",
@@ -44,6 +47,7 @@ export const LIQUOR_COLUMNS = [
     {
         title: "包裝",
         dataIndex: "bottling",
-        width: "30%"
+        width: "30%",
+        render: text => PACKAGE[text]
     }
 ];

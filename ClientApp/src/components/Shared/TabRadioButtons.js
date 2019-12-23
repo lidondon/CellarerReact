@@ -10,10 +10,10 @@ class TabRadioButtons extends Component {
     }
 
     render() {
-        const { items, onChange, defaultValue } = this.props;
+        const { items, onChange, defaultValue, value } = this.props;
 
         return (
-            <Group defaultValue={defaultValue} onChange={onChange}>
+            <Group defaultValue={defaultValue} onChange={onChange} value={value}>
                 {this.getItems(items)}
             </Group>
         );
