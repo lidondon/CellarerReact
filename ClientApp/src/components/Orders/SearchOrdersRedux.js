@@ -1,4 +1,5 @@
 import { intIds2Strings, stringIds2Ints, pushNewObjectsNoDuplicate, replaceNewObject } from '../../utilities/util';
+import moment from 'moment';
 
 const GET_ORDERS = "GET_ORDERS";
 const GET_ORDERS_URL = (startDate, endDate) => `/api/v1/cellarer/orders?startDate=${startDate}&endDate=${endDate}`;
@@ -48,11 +49,13 @@ export const clearOrderInfo = () => {
 }
 
 export const getOrders = (startDate, endDate) => {
-    console.log(GET_ORDERS_URL(startDate, endDate))
+    const utcStartDate = startDate ? new moment(startDate).utc().format("YYYY-MM-DD") : "2000-01-01";
+    const utcEndDate = endDate ? new moment(endDate).utc().format("YYYY-MM-DD") : "9999-12-31"; 
+
     return {
         type: GET_ORDERS,
         statuses: [ LOADING, SUCCESS, ERROR ],
-        url: GET_ORDERS_URL(startDate, endDate),
+        url: GET_ORDERS_URL(utcStartDate, utcEndDate),
     };
 }
 

@@ -88,10 +88,10 @@ class SearchOrders extends Component {
     getOrders = () => {
         const { searchOrdersActions } = this.props;
         const { dateRange } = this.state;
-        const startDate = (dateRange[0]) ? dateRange[0].format(DATE_STRING_FORMAT) : "2000-01-01";
-        const endDate = (dateRange[1]) ? dateRange[1].format(DATE_STRING_FORMAT) : "9999-12-31";
+        // const startDate = (dateRange[0]) ? dateRange[0].format(DATE_STRING_FORMAT) : "2000-01-01";
+        // const endDate = (dateRange[1]) ? dateRange[1].format(DATE_STRING_FORMAT) : "9999-12-31";
 
-        searchOrdersActions.getOrders(startDate, endDate);
+        searchOrdersActions.getOrders(dateRange[0], dateRange[1]);
     }
 
     isChanged = () => {
